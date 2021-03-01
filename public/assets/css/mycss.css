@@ -1,0 +1,325 @@
+body {
+    overflow-y: scroll !important;
+}
+
+.passwordBlock .passReqBlock {
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.15s ease-out;
+    transition: 0.3s;
+}
+
+.passwordBlock input:focus+.passReqBlock {
+    opacity: 1;
+    max-height: 500px;
+    transition: max-height 0.25s ease-in;
+}
+
+.passRequire {
+    font-size: 13px;
+    color: rgb(255, 81, 0);
+}
+
+.passRequire::before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f057";
+    margin-right: 5px;
+}
+
+.passRequire.meet {
+    color: rgb(0, 156, 0);
+}
+
+.passRequire.meet::before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f058";
+    margin-right: 5px;
+}
+
+input.valid {
+    border-color: rgba(126, 239, 104, 0.8) !important;
+}
+
+input.invalid {
+    border-color: rgba(255, 81, 0, 0.8) !important;
+}
+
+input.valid:focus {
+    border-color: rgba(126, 239, 104, 0.8) !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgb(85, 250, 52) !important;
+}
+
+input.invalid:focus {
+    border-color: rgba(255, 81, 0, 0.8) !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgb(255, 81, 0) !important;
+}
+
+#su_facebook:hover {
+    background-color: rgb(0, 118, 214);
+}
+
+#su_github:hover {
+    background-color: rgb(46, 45, 45);
+}
+
+#su_google:hover {
+    background-color: rgb(224, 2, 2);
+}
+
+.mask {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: black;
+    z-index: 1;
+    opacity: 0.5;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.loader {
+    width: 3.5rem !important;
+    height: 3.5rem !important;
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    margin-left: -1.75rem;
+}
+
+.simpleLoader {
+    display: block;
+    width: 1.2rem;
+    height: 1.2rem;
+    -webkit-animation: is-loading 1s linear infinite;
+    animation: is-loading 1s linear infinite;
+    border: 3px solid #4c90f0;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    background: transparent;
+}
+
+button.text-btn {
+    border: none;
+    background-color: unset;
+    cursor: pointer;
+    color: rgba(39, 44, 51, .7);
+    margin-top: -5px;
+}
+
+button.text-btn:hover {
+    text-decoration: underline;
+}
+
+
+.section .btn_nav_group {
+    position: absolute;
+    visibility: hidden;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.section:hover .btn_nav_group {
+    opacity: 1;
+    visibility: unset;
+    position: absolute;
+    right: 0;
+    top: -1rem;
+}
+
+.btn_nav_group .nav_btn {
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-left: 0.25rem;
+}
+
+.btn_nav_group .add_quiz {
+    color: #d9ee1c;
+}
+
+.btn_nav_group .add_lesson {
+    color: #77c13a;
+}
+
+.btn_nav_group .delete_section {
+    color: #d9534f;
+}
+
+.btn_nav_group .add_quiz:hover {
+    color: #f8f417;
+}
+
+.btn_nav_group .add_lesson:hover {
+    color: #5da522;
+}
+
+.btn_nav_group .delete_section:hover {
+    color: #da3631;
+}
+
+.tooltip_owner .tooltiptext {
+    visibility: hidden;
+    width: 6rem;
+    background-color: rgba(0, 0, 0, 0.534);
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 0.8rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: normal;
+    z-index: 1;
+    /* Position the tooltip */
+    position: absolute;
+    bottom: 140%;
+    margin-left: -3.6rem;
+}
+
+.tooltip_owner .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.534) transparent transparent transparent;
+}
+
+.tooltip_owner:hover .tooltiptext {
+    visibility: visible;
+}
+
+.btn-blue {
+    color: #0043ffc7 !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+/* Pageination */
+.page-link.selected_page {
+    background-color: #80808038;
+}
+
+.whiteButton {
+    color: white !important;
+}
+
+.whiteButton.blackHover:hover {
+    color: black !important;
+}
+
+.itemheight {
+    height: 168px !important;
+}
+
+.ava {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.circle-ava {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 50% !important;
+}
+
+.circle-img {
+    border-radius: 50% !important;
+}
+
+.overlay__content {
+    background-color: rgba(70, 86, 228, 0.1);
+}
+
+#content_pane {
+    transform: translateX(230px);
+    opacity: 0;
+    transition: 0.3s;
+}
+
+#content_pane:hover {
+    transform: translateZ(0);
+    opacity: 1;
+}
+
+@keyframes fade-in-up {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.is-sticky {
+    position: fixed;
+    top: 15px;
+    left: auto;
+    right: 2rem;
+    max-width: 300px;
+    max-height: 170px;
+    width: 300px;
+    height: 170px;
+    transform: translateY(100%);
+    animation: fade-in-up .4s ease forwards;
+}
+
+.video-gone {
+    visibility: hidden;
+    height: 0;
+}
+
+
+
+.rating-star {
+    display: inline-flex;
+    flex-direction: row-reverse;
+}
+
+.rating-star input {
+    display: none;
+}
+
+.rating-star label {
+    color: #eee;
+}
+
+.rating-star label:before {
+    font-family: "Font Awesome 5 Free";
+    display: block;
+    font-size: 1.5rem;
+    padding: 0.3rem 0.2rem;
+    margin: 0;
+    cursor: pointer;
+    font-weight: 900;
+    content: "\f005";
+    color: white;
+
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #f9c32c;
+}
+
+.rating-star input:checked~label:before {
+    text-shadow: 0px 0 5px rgba(255, 157, 180, 0.28);
+    -webkit-text-fill-color: #f9c32c;
+}
+
+.rating-star input:hover~label:before {
+    -webkit-text-stroke-color: #f9882c;
+    /* text-shadow: 0px 0 5px rgba(255, 157, 180, 0.28); */
+    text-shadow: 0px 0px 5px #edfc19;
+}
+
+.nowidth {
+    width: inherit !important;
+}
