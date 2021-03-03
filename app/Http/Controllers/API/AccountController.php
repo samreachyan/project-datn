@@ -11,6 +11,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AccountController extends Controller
 {
@@ -89,6 +90,13 @@ class AccountController extends Controller
         } else {
             $account = Account::where('email', $request->email)->first();
 
+            if ($account == null) {
+                return [
+                    'msg' => 'The account isn\'t registered yet' ,
+                    'data' => null
+                ];
+            }
+
             // check again is already verified
             if ($account->is_verified == 1) {
                 return [
@@ -132,6 +140,7 @@ class AccountController extends Controller
             if ($account && ($account->email == $request->email)) {
                 $account->is_verified = true;
                 $account->confirmation_code = null;
+                $account->remember_token = Str::random(60); // make remember token
                 $account->save();
                 return [
                     'msg' => 'The account is verified successfully',
@@ -155,9 +164,56 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function login(Request $request)
     {
-        //
+        $rules = array(
+            'email'=>'required|email',
+            'password' => 'required|string'
+        );
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $msg = $validator->errors();
+            return [
+                'msg' => $msg,
+                'data' => null
+            ];
+        } else {
+            $user = Account::whereRaw('LOWER(email) = ?', $request->email)->first();
+
+            if ($user && Hash::check($request->password, $user->password)) {
+                // check account is verified
+                if ($user->is_verified == false) {
+                    return [
+                        'msg' => 'The account not verify yet',
+                        'data' => null
+                    ];
+                }
+
+                $user->remember_token = Str::random(60); // make remember token
+                $user->save();
+
+                return [
+                    "msg" => "The account authenticated",
+                    "data" => [
+                        'id' => $user->id,
+                        'username' => $user->username,
+                        'fulfname' => $user->name,
+                        'email' => $user->email,
+                        'avatar' => $user->avatar_url,
+                        'active' => $user->is_verified == 1 ? "true" : "false",
+                        'token' => $user->remember_token,
+                        'created_at' => $user->created_at,
+                        'updated_at' => $user->updated_at,
+                    ]
+                ];
+            } else {
+                return [
+                    "msg" => "The account not authenticated",
+                    "data" => null
+                ];
+            }
+        }
     }
 
     /**

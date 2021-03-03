@@ -31,7 +31,16 @@ Content-Type: 'application/json'
 
 {
     "email": "sabayblc@gmail.com",
-    "confirmation_code": "16147917211603fc429ef95d"
+    "confirmation_code": "16147954851603fd2ddb2f1c"
+}
+
+### login account and store token
+POST http://localhost:8000/api/login HTTP/1.1
+Content-Type: 'application/json'
+
+{
+    "email": "sabayblc@gmail.com",
+    "password": "$#@$@m$#@Reach"
 }
 
 ### change_info_after signup
