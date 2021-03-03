@@ -38,6 +38,10 @@ use App\Enums\UserRole;
         'name',
         'username',
         'email',
+        'is_verified',
+        'confirmation_code',
+        'created_at',
+        'updated_at',
     ];
 
     /**
