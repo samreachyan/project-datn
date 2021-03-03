@@ -23,3 +23,16 @@ Content-Type: 'application/json'
 {
     "email": "sabayblc@gmail.com"
 }
+
+### check verify code
+
+POST http://localhost:8000/api/check_verify_code HTTP/1.1
+Content-Type: 'application/json'
+
+{
+    "email": "sabayblc@gmail.com",
+    "confirmation_code": "16147917211603fc429ef95d"
+}
+
+### change_info_after signup
+

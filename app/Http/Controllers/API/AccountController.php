@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Jobs\SendVerifyEmail;
 use App\Models\Account;
-use App\Models\Instructor;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -22,8 +21,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $user = Account::find(5);
-
+        $user = Account::findOrFail(5);
         return new UserResource($user);
     }
 
@@ -45,7 +43,7 @@ class AccountController extends Controller
 
         if ($validator->fails()) {
             $msg = $validator->errors();
-            return [ 'msg' => $msg ];
+            return [ 'msg' => $msg, 'data' => null ];
         } else {
             $confirmation_code = time().uniqid(true);
             $account = new Account;
@@ -91,16 +89,30 @@ class AccountController extends Controller
         } else {
             $account = Account::where('email', $request->email)->first();
 
-            return [
-                'msg' => 'Requested confirmation code successfully',
-                'data' => [
-                    'confirmation_code' => $account->confirmation_code
-                ]
-            ];
+            // check again is already verified
+            if ($account->is_verified == 1) {
+                return [
+                    'msg' => 'Account has been active',
+                    'data' => null
+                ];
+            } else {
+                return [
+                    'msg' => 'Requested confirmation code successfully',
+                    'data' => [
+                        'confirmation_code' => $account->confirmation_code
+                    ]
+                ];
+            }
         }
     }
 
-    public function check_verify_code (Request $request) {
+     /**
+     * Display the specified resource.
+     *
+     * @param  string email, confirmation_code
+     * @return \Illuminate\Http\Response
+     */
+    public function check_code(Request $request) {
         $rules = array(
             'email'=>'required|email',
             'confirmation_code' => 'required|string'
@@ -109,23 +121,30 @@ class AccountController extends Controller
 
         if ($validator->fails()) {
             $msg = $validator->errors();
-            return [ 'msg' => $msg, 'data' => null ];
+            return [
+                'msg' => $msg,
+                'data' => null
+            ];
         } else {
             $code = $request->confirmation_code;
             $account = Account::where('confirmation_code', $code)->first();
-            if ($account) {
+            // check email are same or not
+            if ($account && ($account->email == $request->email)) {
                 $account->is_verified = true;
                 $account->confirmation_code = null;
                 $account->save();
                 return [
-                    'msg' => 'verified successfully',
+                    'msg' => 'The account is verified successfully',
                     'data' => [
-
+                        'id' => $account->id,
+                        'active' => $account->is_verified == 1 ? 'true' : 'false'
                     ]
                 ];
-
-                $user = Account::find($account->id);
-                return new UserResource($user);
+            } else {
+                return [
+                    'msg' => 'your email or code is invalid',
+                    'data' => null
+                ];
             }
         }
     }
