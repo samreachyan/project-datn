@@ -6,10 +6,10 @@ POST  http://localhost:8000/api/signup HTTP/1.1
 Content-Type: 'application/json'
 
 {
-    "username": "sabay",
+    "username": "sabayblc",
     "fullname": "Sabyblc",
     "email": "sabayblc@gmail.com",
-    "password": "$#@$@m$#@Reach"
+    "password": "sabayblc"
 }
 
 ###
@@ -31,7 +31,7 @@ Content-Type: 'application/json'
 
 {
     "email": "sabayblc@gmail.com",
-    "confirmation_code": "16147954851603fd2ddb2f1c"
+    "confirmation_code": "161485151916040adbf5b995"
 }
 
 ### login account and store token
@@ -40,8 +40,23 @@ Content-Type: 'application/json'
 
 {
     "email": "sabayblc@gmail.com",
-    "password": "$#@$@m$#@Reach"
+    "password": "sabayblc"
 }
 
 ### change_info_after signup
+POST http://localhost:8000/api/signup_info_after_signup HTTP/1.1
+Content-Type: 'application/json'
+Authorization: Bearer 2|nx7eiLP26cPAxwST28RtT3pSbCTSDmjEmVVODvr5
 
+{
+    "image": "/home/linux/Pictures/bai4.png"
+}
+
+### test auth with token
+POST http://localhost:8000/api/token HTTP/1.1
+Content-Type: 'application/json'
+Authorization: Bearer 2|nx7eiLP26cPAxwST28RtT3pSbCTSDmjEmVVODvr5
+
+{
+    "email": "samreach@gmail.com"
+}

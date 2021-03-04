@@ -190,7 +190,8 @@ class AccountController extends Controller
                     ];
                 }
 
-                $user->remember_token = Str::random(60); // make remember token
+                $token = $user->createToken('authToken')->plainTextToken;
+                $user->remember_token = $token; // make remember token
                 $user->save();
 
                 return [
@@ -202,7 +203,7 @@ class AccountController extends Controller
                         'email' => $user->email,
                         'avatar' => $user->avatar_url,
                         'active' => $user->is_verified == 1 ? "true" : "false",
-                        'token' => $user->remember_token,
+                        'token' => $token,
                         'created_at' => $user->created_at,
                         'updated_at' => $user->updated_at,
                     ]
@@ -235,6 +236,9 @@ class AccountController extends Controller
                 'data' => null
             ];
         } else {
+            // Revoke the user's current token...
+            return $request->user()->currentAccessToken();
+
             // find user by token
             $user = Account::whereRaw('LOWER(remember_token) = ?', $request->token)->first();
 

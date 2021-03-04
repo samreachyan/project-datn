@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AccountController as APIAccountController;
 use Illuminate\Http\Request;
+use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,4 +30,12 @@ Route::post('/login', [APIAccountController::class, 'login']);
 Route::post('/signup', [APIAccountController::class, 'store']);
 Route::post('/get_verify_code', [APIAccountController::class, 'getVerifyCode']);
 Route::post('/check_verify_code', [APIAccountController::class, 'checkVerifyCode']);
-Route::post('/signup_info_after_signup', [APIAccountController::class, 'signupInfoAfterSignup']);
+
+
+// Authorization
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/token', function () {
+        return [ 'msg' => 'token work'];
+    });
+    Route::post('/signup_info_after_signup', [APIAccountController::class, 'signupInfoAfterSignup']);
+});
