@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class AccountController extends Controller
 {
@@ -199,7 +201,7 @@ class AccountController extends Controller
                     "data" => [
                         'id' => $user->id,
                         'username' => $user->username,
-                        'fulfname' => $user->name,
+                        'fullfname' => $user->name,
                         'email' => $user->email,
                         'avatar' => $user->avatar_url,
                         'active' => $user->is_verified == 1 ? "true" : "false",
@@ -225,7 +227,7 @@ class AccountController extends Controller
      */
     public function signupInfoAfterSignup(Request $request) {
         $rules = array(
-            'image' => 'image|mimes:jpeg,png,jpg|mimetypes:image/jpeg,image/png, image/jpg|max:2048',
+            'image' => 'required|mimes:jpeg,png,jpg|mimetypes:image/jpeg,image/png, image/jpg|max:2048',
         );
         $validator = Validator::make($request->all(), $rules);
 
@@ -236,24 +238,37 @@ class AccountController extends Controller
                 'data' => null
             ];
         } else {
-            // Revoke the user's current token...
-            return $request->user()->currentAccessToken();
-
             // find user by token
-            $user = Account::whereRaw('LOWER(remember_token) = ?', $request->token)->first();
+            $email = $request->user()->currentAccessToken()->tokenable->email;
+            $user = Account::whereRaw('LOWER(email) = ?', $email)->first();
+
+            // checking file image
+            $image = $request->file('image');
+            $fileName = $user->username .'-avatar-200x200'. '.' . $image->getClientOriginalExtension();
+
+            // $avatar = Image::make($image->getRealPath());
+            // $avatar->resize(200, 200, function ($constraint) {
+            //     $constraint->aspectRatio();
+            // });
+            // $avatar->stream();
+
+            // $path = $request->file('image')->store('public/images/avatars');
+            $path = Storage::putFile('public/images/avatars', $fileName);
+
+            $user->avatar_url = $path;
+            $user->save();
 
             return [
                 'msg' => 'Uploaded avatar successfully',
-                'data' => [
+                "data" => [
                     'id' => $user->id,
                     'username' => $user->username,
-                    'fulfname' => $user->name,
+                    'fullfname' => $user->name,
                     'email' => $user->email,
                     'avatar' => $user->avatar_url,
                     'active' => $user->is_verified == 1 ? "true" : "false",
-                    'token' => $user->remember_token,
                     'created_at' => $user->created_at,
-                    'updated_at' => $user->updated_at
+                    'updated_at' => $user->updated_at,
                 ]
             ];
         }
@@ -271,7 +286,19 @@ class AccountController extends Controller
     {
         // Revoke the user's current token...
         $user = $request->user()->currentAccessToken()->tokenable;
-        return ['mgs' => "token check", 'data' => $user ];
+        return [
+            'msg' => 'success',
+            "data" => [
+                'id' => $user->id,
+                'username' => $user->username,
+                'fullfname' => $user->name,
+                'email' => $user->email,
+                'avatar' => $user->avatar_url,
+                'active' => $user->is_verified == 1 ? "true" : "false",
+                'created_at' => $user->created_at,
+                'updated_at' => $user->updated_at,
+            ]
+        ];
     }
 
     /**

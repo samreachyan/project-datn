@@ -45,12 +45,10 @@ Content-Type: 'application/json'
 
 ### change_info_after signup
 POST http://localhost:8000/api/signup_info_after_signup HTTP/1.1
-Content-Type: 'application/json'
-Authorization: Bearer 2|nx7eiLP26cPAxwST28RtT3pSbCTSDmjEmVVODvr5
+Authorization: Bearer 4|soXh80kXLPJN6eFK4cjc45ekhSSHP3kpvdIv2RDe
+Content-Disposition: form-data; name="image"; filename="/home/linux/Pictures/Bai2.png"
+Content-Type: image/png
 
-{
-    "image": "/home/linux/Pictures/bai4.png"
-}
 
 ### get user info by token
 POST http://localhost:8000/api/token HTTP/1.1
