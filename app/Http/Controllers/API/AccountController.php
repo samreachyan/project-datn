@@ -78,7 +78,7 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function get_verify_code(Request $request) {
+    public function getVerifyCode(Request $request) {
         $rules = array(
             'email'=>'required|email'
         );
@@ -120,7 +120,7 @@ class AccountController extends Controller
      * @param  string email, confirmation_code
      * @return \Illuminate\Http\Response
      */
-    public function check_code(Request $request) {
+    public function checkVerifyCode(Request $request) {
         $rules = array(
             'email'=>'required|email',
             'confirmation_code' => 'required|string'
@@ -214,6 +214,46 @@ class AccountController extends Controller
                 ];
             }
         }
+    }
+    /**
+     * Sign up information after sign just upload avatar
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  file $image
+     * @return \Illuminate\Http\Response
+     */
+    public function signupInfoAfterSignup(Request $request) {
+        $rules = array(
+            'image' => 'image|mimes:jpeg,png,jpg|mimetypes:image/jpeg,image/png, image/jpg|max:2048',
+        );
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $msg = $validator->errors();
+            return [
+                'msg' => $msg,
+                'data' => null
+            ];
+        } else {
+            // find user by token
+            $user = Account::whereRaw('LOWER(remember_token) = ?', $request->token)->first();
+
+            return [
+                'msg' => 'Uploaded avatar successfully',
+                'data' => [
+                    'id' => $user->id,
+                    'username' => $user->username,
+                    'fulfname' => $user->name,
+                    'email' => $user->email,
+                    'avatar' => $user->avatar_url,
+                    'active' => $user->is_verified == 1 ? "true" : "false",
+                    'token' => $user->remember_token,
+                    'created_at' => $user->created_at,
+                    'updated_at' => $user->updated_at
+                ]
+            ];
+        }
+
     }
 
     /**

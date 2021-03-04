@@ -27,6 +27,6 @@ Route::get('/test', function () {
 Route::get('/users', [APIAccountController::class, 'index']);
 Route::post('/login', [APIAccountController::class, 'login']);
 Route::post('/signup', [APIAccountController::class, 'store']);
-Route::post('/get_verify_code', [APIAccountController::class, 'get_verify_code']);
-Route::post('/check_verify_code', [APIAccountController::class, 'check_code']);
-
+Route::post('/get_verify_code', [APIAccountController::class, 'getVerifyCode']);
+Route::post('/check_verify_code', [APIAccountController::class, 'checkVerifyCode']);
+Route::post('/signup_info_after_signup', [APIAccountController::class, 'signupInfoAfterSignup']);
