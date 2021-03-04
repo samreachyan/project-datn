@@ -52,11 +52,14 @@ Authorization: Bearer 2|nx7eiLP26cPAxwST28RtT3pSbCTSDmjEmVVODvr5
     "image": "/home/linux/Pictures/bai4.png"
 }
 
-### test auth with token
+### get user info by token
 POST http://localhost:8000/api/token HTTP/1.1
 Content-Type: 'application/json'
-Authorization: Bearer 2|nx7eiLP26cPAxwST28RtT3pSbCTSDmjEmVVODvr5
+Authorization: Bearer 4|soXh80kXLPJN6eFK4cjc45ekhSSHP3kpvdIv2RDe
 
-{
-    "email": "samreach@gmail.com"
-}
+
+### get test auth token
+POST http://localhost:8000/api/get HTTP/1.1
+Authorization: Bearer 4|soXh80kXLPJN6eFK4cjc45ekhSSHP3kpvdIv2RDe
+
+###

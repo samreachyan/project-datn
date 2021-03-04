@@ -34,8 +34,9 @@ Route::post('/check_verify_code', [APIAccountController::class, 'checkVerifyCode
 
 // Authorization
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::post('/token', function () {
-        return [ 'msg' => 'token work'];
+    Route::post('/get', function () {
+        return ['get test'];
     });
+    Route::post('/token', [APIAccountController::class, 'show']);
     Route::post('/signup_info_after_signup', [APIAccountController::class, 'signupInfoAfterSignup']);
 });

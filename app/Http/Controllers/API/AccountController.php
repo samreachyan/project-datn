@@ -267,6 +267,20 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function show(Request $request)
+    {
+        // Revoke the user's current token...
+        $user = $request->user()->currentAccessToken()->tokenable;
+        return ['mgs' => "token check", 'data' => $user ];
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
         //
