@@ -118,6 +118,9 @@ class AccountController extends Controller
                     'data' => null
                 ];
             } else {
+                // send confirmation code to user's email
+                dispatch(new SendVerifyEmail($account));
+
                 return [
                     'msg' => 'Requested confirmation code successfully',
                     'data' => [
@@ -337,9 +340,52 @@ class AccountController extends Controller
                     "data" => null
                 ];
             }
-            return [ $user ];
         }
     }
+
+    public function forgotPassword(Request $request) {
+        $rules = array(
+            'email'=>'required|email'
+        );
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $msg = $validator->errors();
+            return [ 'msg' => $msg, 'data' => null ];
+        } else {
+            $confirmation_code = time().uniqid(true);
+            $account = Account::where('email', $request->email)->first();
+
+            if ($account == null) {
+                return [
+                    'msg' => 'The account isn\'t registered yet' ,
+                    'data' => null
+                ];
+            }
+
+            // check again is already verified
+            if ($account->is_verified == 1) {
+                // if account active -> change pwd
+                $account->confirmation_code = $confirmation_code;
+                $account->save();
+
+                // send confirmation code to user's email
+                dispatch(new SendVerifyEmail($account));
+                return [
+                    'msg' => 'Requested confirmation code successfully',
+                    'data' => [
+                        'confirmation_code' => $account->confirmation_code
+                    ]
+                ];
+            } else {
+                return [
+                    'msg' => 'Account hasn\'t been active, can\'t request code',
+                    'data' => null
+                ];
+            }
+        }
+    }
+
 
     /**
      * Update the specified resource in storage.

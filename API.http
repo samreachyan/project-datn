@@ -75,9 +75,15 @@ POST http://localhost:8000/api/forgot-password HTTP/1.1
 Content-Type: 'application/json'
 
 {
-    "email": "sabayblc@gmail.com",
-    "confirmation_code": "Y75na4O3u1KLZmuqzIwq02EfxxYlzohZredR3xTL",
-    "new_password": "sabayblc2"
+    "email": "sabayblc@gmail.com"
 }
 
-###
+### change forgot password by confirmation code
+POST http://localhost:8000/api/change-forgot-password HTTP/1.1
+Content-Type: 'application/json'
+
+{
+    "email": "sabayblc@gmail.com",
+    "confirmation_code": "161493663616041fa3c3c4a1",
+    "password": "sabayblc1"
+}
