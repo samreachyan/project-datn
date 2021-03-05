@@ -79,10 +79,10 @@ Content-Type: 'application/json'
 }
 
 ### change forgot password by confirmation code
-POST http://localhost:8000/api/change-forgot-password HTTP/1.1
+POST http://localhost:8000/api/reset-password HTTP/1.1
 Content-Type: 'application/json'
 
 {
-    "confirmation_code": "161493770516041fe69c39f1",
+    "confirmation_code": "161493802616041ffaa454e1",
     "password": "sabayblc"
 }

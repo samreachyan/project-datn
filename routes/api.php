@@ -31,7 +31,7 @@ Route::post('/signup', [APIAccountController::class, 'store']);
 Route::post('/get_verify_code', [APIAccountController::class, 'getVerifyCode']);
 Route::post('/check_verify_code', [APIAccountController::class, 'checkVerifyCode']);
 Route::post('/forgot-password', [APIAccountController::class, 'forgotPassword']);
-Route::post('/change-forgot-password', [APIAccountController::class, 'changeForgotPassword']);
+Route::post('/reset-password', [APIAccountController::class, 'resetPassword']);
 
 // Authorization
 Route::middleware(['auth:sanctum'])->group(function () {

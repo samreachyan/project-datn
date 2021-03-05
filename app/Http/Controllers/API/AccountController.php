@@ -77,7 +77,7 @@ class AccountController extends Controller
                     'username' => $user->username,
                     'fullfname' => $user->name,
                     'email' => $user->email,
-                    'avatar' => $user->avatar_url,
+                    'avatar_url' => $user->avatar_url,
                     'active' => $user->is_verified == 1 ? "true" : "false",
                     'created_at' => $user->created_at,
                     'updated_at' => $user->updated_at,
@@ -218,7 +218,7 @@ class AccountController extends Controller
                         'username' => $user->username,
                         'fullfname' => $user->name,
                         'email' => $user->email,
-                        'avatar' => $user->avatar_url,
+                        'avatar_url' => $user->avatar_url,
                         'active' => $user->is_verified == 1 ? "true" : "false",
                         'token' => $token,
                         'created_at' => $user->created_at,
@@ -281,7 +281,7 @@ class AccountController extends Controller
                     'username' => $user->username,
                     'fullfname' => $user->name,
                     'email' => $user->email,
-                    'avatar' => $user->avatar_url,
+                    'avatar_url' => $user->avatar_url,
                     'active' => $user->is_verified == 1 ? "true" : "false",
                     'created_at' => $user->created_at,
                     'updated_at' => $user->updated_at,
@@ -328,7 +328,7 @@ class AccountController extends Controller
                         'username' => $user->username,
                         'fullfname' => $user->name,
                         'email' => $user->email,
-                        'avatar' => $user->avatar_url,
+                        'avatar_url' => $user->avatar_url,
                         'active' => $user->is_verified == 1 ? "true" : "false",
                         'created_at' => $user->created_at,
                         'updated_at' => $user->updated_at,
@@ -385,7 +385,7 @@ class AccountController extends Controller
             }
         }
     }
-    public function changeForgotPassword(Request $request) {
+    public function resetPassword(Request $request) {
         $rules = array(
             'confirmation_code' => 'required|string',
             'password' => 'required|string|min:6'
@@ -416,7 +416,7 @@ class AccountController extends Controller
                         'username' => $user->username,
                         'fullfname' => $user->name,
                         'email' => $user->email,
-                        'avatar' => $user->avatar_url,
+                        'avatar_url' => $user->avatar_url,
                         'active' => $user->is_verified == 1 ? "true" : "false",
                         'created_at' => $user->created_at,
                         'updated_at' => $user->updated_at,
@@ -444,7 +444,7 @@ class AccountController extends Controller
                 'username' => $user->username,
                 'fullfname' => $user->name,
                 'email' => $user->email,
-                'avatar' => $user->avatar_url,
+                'avatar_url' => $user->avatar_url,
                 'active' => $user->is_verified == 1 ? "true" : "false",
                 'created_at' => $user->created_at,
                 'updated_at' => $user->updated_at,
