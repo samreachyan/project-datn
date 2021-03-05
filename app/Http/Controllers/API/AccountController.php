@@ -246,16 +246,17 @@ class AccountController extends Controller
             $image = $request->file('image');
             $fileName = $user->username .'-avatar-200x200'. '.' . $image->getClientOriginalExtension();
 
-            // $avatar = Image::make($image->getRealPath());
-            // $avatar->resize(200, 200, function ($constraint) {
-            //     $constraint->aspectRatio();
-            // });
-            // $avatar->stream();
+            $avatar = Image::make($image->getRealPath());
+            $avatar->resize(200, 200, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $avatar->stream();
+            if (Storage::exists('public/images/avatars'.'/'.$fileName)) {
+                Storage::delete('public/images/avatars'.'/'.$fileName);
+            }
+            Storage::disk('local')->put('public/images/avatars'.'/'.$fileName, $avatar, 'public');
 
-            // $path = $request->file('image')->store('public/images/avatars');
-            $path = Storage::putFile('public/images/avatars', $fileName);
-
-            $user->avatar_url = $path;
+            $user->avatar_url = Storage::url('public/images/avatars'.'/'.$fileName);
             $user->save();
 
             return [
