@@ -19,7 +19,7 @@ class UserResource extends JsonResource
             'data' => [
                 'id' => $this->id,
                 'username' => $this->username,
-                'fulfname' => $this->name,
+                'fullname' => $this->name,
                 'email' => $this->email,
                 'active' => $this->is_verified == 1 ? "true" : "false",
                 'token' => $this->remember_token,

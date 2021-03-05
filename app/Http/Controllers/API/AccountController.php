@@ -70,7 +70,19 @@ class AccountController extends Controller
 
             // return [ 'msg' => 'đã đăng ký thành công'];
             $user = Account::find($account->id);
-            return new UserResource($user);
+            return [
+                'msg' => 'Account signup successfully',
+                "data" => [
+                    'id' => $user->id,
+                    'username' => $user->username,
+                    'fullfname' => $user->name,
+                    'email' => $user->email,
+                    'avatar' => $user->avatar_url,
+                    'active' => $user->is_verified == 1 ? "true" : "false",
+                    'created_at' => $user->created_at,
+                    'updated_at' => $user->updated_at,
+                ]
+            ];
         }
     }
 
@@ -187,7 +199,7 @@ class AccountController extends Controller
                 // check account is verified
                 if ($user->is_verified == false) {
                     return [
-                        'msg' => 'The account not verify yet',
+                        'msg' => 'Account not verify yet',
                         'data' => null
                     ];
                 }
@@ -197,7 +209,7 @@ class AccountController extends Controller
                 $user->save();
 
                 return [
-                    "msg" => "The account authenticated",
+                    "msg" => "Login successfully",
                     "data" => [
                         'id' => $user->id,
                         'username' => $user->username,
@@ -212,7 +224,7 @@ class AccountController extends Controller
                 ];
             } else {
                 return [
-                    "msg" => "The account not authenticated",
+                    "msg" => "Login error, please try again",
                     "data" => null
                 ];
             }
