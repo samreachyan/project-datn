@@ -38,5 +38,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return ['get test'];
     });
     Route::post('/token', [APIAccountController::class, 'show']);
-    Route::post('/signup_info_after_signup', [APIAccountController::class, 'signupInfoAfterSignup']);
+    Route::post('/signup-info-after-signup', [APIAccountController::class, 'signupInfoAfterSignup']);
+    Route::post('/change-password', [APIAccountController::class, 'changePassword']);
 });

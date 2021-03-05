@@ -288,6 +288,59 @@ class AccountController extends Controller
 
     }
 
+    public function changePassword(Request $request) {
+        $rules = array(
+            'password'=>'required|string|min:6',
+            'new_password'=>'required|string|min:6'
+        );
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $msg = $validator->errors();
+            return [
+                'msg' => $msg,
+                'data' => null
+            ];
+        } else {
+            // get user infomation by token
+            $email = $request->user()->currentAccessToken()->tokenable->email;
+            $user = Account::whereRaw('LOWER(email) = ?', $email)->first();
+
+            // verify password
+            if ($user && Hash::check($request->password, $user->password)) {
+                // change the same password with old password or not
+                if ($request->password == $request->new_password) {
+                    return [
+                        'msg' => 'Provide new password',
+                        'data' => null
+                    ];
+                }
+                // change new password
+                $user->password = Hash::make($request->new_password);
+                $user->save();
+                return [
+                    'msg' => 'Account changed password successfully',
+                    "data" => [
+                        'id' => $user->id,
+                        'username' => $user->username,
+                        'fullfname' => $user->name,
+                        'email' => $user->email,
+                        'avatar' => $user->avatar_url,
+                        'active' => $user->is_verified == 1 ? "true" : "false",
+                        'created_at' => $user->created_at,
+                        'updated_at' => $user->updated_at,
+                    ]
+                ];
+            } else {
+                return [
+                    'msg' => 'Password is incorrect, please try again',
+                    "data" => null
+                ];
+            }
+            return [ $user ];
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      *
