@@ -385,7 +385,46 @@ class AccountController extends Controller
             }
         }
     }
+    public function changeForgotPassword(Request $request) {
+        $rules = array(
+            'confirmation_code' => 'required|string',
+            'password' => 'required|string|min:6'
+        );
+        $validator = Validator::make($request->all(), $rules);
 
+        if ($validator->fails()) {
+            $msg = $validator->errors();
+            return [ 'msg' => $msg, 'data' => null ];
+        } else {
+            // find user by confirmation code
+            $user = Account::where('confirmation_code', $request->confirmation_code)->first();
+            if ($user == null) {
+                return [
+                    'msg' => 'The account isn\'t found',
+                    'data' => null
+                ];
+            } else {
+                // verify code and add new password => active user
+                $user->confirmation_code = null;
+                $user->password = Hash::make($request->password);
+                $user->save();
+
+                return [
+                    'msg' => 'Account changed password successfully',
+                    "data" => [
+                        'id' => $user->id,
+                        'username' => $user->username,
+                        'fullfname' => $user->name,
+                        'email' => $user->email,
+                        'avatar' => $user->avatar_url,
+                        'active' => $user->is_verified == 1 ? "true" : "false",
+                        'created_at' => $user->created_at,
+                        'updated_at' => $user->updated_at,
+                    ]
+                ];
+            }
+        }
+    }
 
     /**
      * Update the specified resource in storage.
