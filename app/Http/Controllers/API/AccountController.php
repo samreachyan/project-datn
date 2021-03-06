@@ -72,16 +72,7 @@ class AccountController extends Controller
             $user = Account::find($account->id);
             return [
                 'msg' => 'Account signup successfully',
-                "data" => [
-                    'id' => $user->id,
-                    'username' => $user->username,
-                    'fullfname' => $user->name,
-                    'email' => $user->email,
-                    'avatar_url' => $user->avatar_url,
-                    'active' => $user->is_verified == 1 ? "true" : "false",
-                    'created_at' => $user->created_at,
-                    'updated_at' => $user->updated_at,
-                ]
+                "data" => new UserResource($user)
             ];
         }
     }
@@ -276,16 +267,7 @@ class AccountController extends Controller
 
             return [
                 'msg' => 'Uploaded avatar successfully',
-                "data" => [
-                    'id' => $user->id,
-                    'username' => $user->username,
-                    'fullfname' => $user->name,
-                    'email' => $user->email,
-                    'avatar_url' => $user->avatar_url,
-                    'active' => $user->is_verified == 1 ? "true" : "false",
-                    'created_at' => $user->created_at,
-                    'updated_at' => $user->updated_at,
-                ]
+                "data" => new UserResource($user)
             ];
         }
 
@@ -323,16 +305,7 @@ class AccountController extends Controller
                 $user->save();
                 return [
                     'msg' => 'Account changed password successfully',
-                    "data" => [
-                        'id' => $user->id,
-                        'username' => $user->username,
-                        'fullfname' => $user->name,
-                        'email' => $user->email,
-                        'avatar_url' => $user->avatar_url,
-                        'active' => $user->is_verified == 1 ? "true" : "false",
-                        'created_at' => $user->created_at,
-                        'updated_at' => $user->updated_at,
-                    ]
+                    "data" => new UserResource($user)
                 ];
             } else {
                 return [
@@ -411,16 +384,7 @@ class AccountController extends Controller
 
                 return [
                     'msg' => 'Account changed password successfully',
-                    "data" => [
-                        'id' => $user->id,
-                        'username' => $user->username,
-                        'fullfname' => $user->name,
-                        'email' => $user->email,
-                        'avatar_url' => $user->avatar_url,
-                        'active' => $user->is_verified == 1 ? "true" : "false",
-                        'created_at' => $user->created_at,
-                        'updated_at' => $user->updated_at,
-                    ]
+                    "data" => new UserResource($user)
                 ];
             }
         }
@@ -439,16 +403,7 @@ class AccountController extends Controller
         $user = $request->user()->currentAccessToken()->tokenable;
         return [
             'msg' => 'success',
-            "data" => [
-                'id' => $user->id,
-                'username' => $user->username,
-                'fullfname' => $user->name,
-                'email' => $user->email,
-                'avatar_url' => $user->avatar_url,
-                'active' => $user->is_verified == 1 ? "true" : "false",
-                'created_at' => $user->created_at,
-                'updated_at' => $user->updated_at,
-            ]
+            "data" => new UserResource($user)
         ];
     }
 
