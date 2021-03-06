@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AccountController as APIAccountController;
+use App\Http\Controllers\API\CourseController as APICourseController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
@@ -41,4 +42,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/token', [APIAccountController::class, 'show']);
     Route::post('/signup-info-after-signup', [APIAccountController::class, 'signupInfoAfterSignup']);
     Route::post('/change-password', [APIAccountController::class, 'changePassword']);
+
+    // course router by token
+    Route::get('/get-all-courses', [APICourseController::class, 'getAllCourses']);
 });

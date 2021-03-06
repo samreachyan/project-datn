@@ -86,3 +86,8 @@ Content-Type: 'application/json'
     "confirmation_code": "161493802616041ffaa454e1",
     "password": "sabayblc"
 }
+
+### get all courses
+GET http://localhost:8000/api/get-all-courses HTTP/1.1
+Authorization: Bearer 1|Y75na4O3u1KLZmuqzIwq02EfxxYlzohZredR3xTL
+
