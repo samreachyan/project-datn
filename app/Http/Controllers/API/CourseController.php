@@ -14,7 +14,11 @@ class CourseController extends Controller
 
         return [
             'msg' => 'Fetched all courses successfully',
-            'data' => CourseResource::collection($hotCourses)
+            'data' => [
+                'new_courses' => CourseResource::collection($hotCourses),
+                'hot_courses' => CourseResource::collection($hotCourses),
+                'all_courses' => CourseResource::collection($hotCourses)
+            ]
         ];
     }
 }
