@@ -18,7 +18,7 @@ class InstructorResource extends JsonResource
         $instructor = Instructor::find($this->id);
 
         return [
-            'id' => $this->id,
+            'id' => (string) $this->id,
             'name' => $this->name,
             'bio' => $instructor->bio,
             'introduce' => $instructor->introduce

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CoursePageResources;
 use App\Http\Resources\CourseResource;
 use App\Models\Course;
 use Illuminate\Http\Request;
@@ -21,6 +22,15 @@ class CourseController extends Controller
                 'hot_courses' => CourseResource::collection($hotCourses),
                 'all_courses' => CourseResource::collection($courses)
             ]
+        ];
+    }
+
+    public function hotCourses() {
+        $hotCourses = Course::withCount('students')->orderBy('price', 'desc')->paginate(3);
+
+        return [
+            'msg' => 'Fetched hot courses successfully',
+            'data' => new CoursePageResources($hotCourses)
         ];
     }
 }
