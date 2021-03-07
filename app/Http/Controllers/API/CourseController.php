@@ -7,6 +7,7 @@ use App\Http\Resources\CoursePageResources;
 use App\Http\Resources\CourseResource;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
 {
@@ -32,5 +33,24 @@ class CourseController extends Controller
             'msg' => 'Fetched hot courses successfully',
             'data' => new CoursePageResources($hotCourses)
         ];
+    }
+
+    public function courseDetails (Request $request) {
+        $rules = array(
+            'id_course' => 'required|string',
+        );
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $msg = $validator->errors();
+            return [ 'msg' => $msg, 'data' => null ];
+        } else {
+            $course = Course::withCount('students')->where('id', $request->id_course)->first();
+
+            return [
+                'msg' => 'Found course successfully',
+                'data' => $course
+            ];
+        }
     }
 }

@@ -46,4 +46,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // course router by token
     Route::post('/get-all-courses', [APICourseController::class, 'getAllCourses']);
     Route::post('/hot-courses', [APICourseController::class, 'hotCourses']);
+    Route::post('/course-details', [APICourseController::class, 'courseDetails']);
 });
