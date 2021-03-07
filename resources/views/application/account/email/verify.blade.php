@@ -59,11 +59,14 @@
                 Cảm ơn bạn đã đăng ký tài khoản của chúng tôi.
             </div>
             <div class="text">Vui lòng nhấn vào nút dưới đây để hoàn tất đăng ký.</div>
+            <div> Your code is <b style="font-size: larger">{{ $confirmation_code }}</b></div>
+            <br>
+            <p> Bạn có thể xác thực theo nút dưới: </p>
             <div class="button">
                 <a href="{{ route('verify', ['code' => $confirmation_code]) }}">
                     Đây là Email của tôi
                 </a>
-            </div>
+            </p>
         </div>
     </div>
 
