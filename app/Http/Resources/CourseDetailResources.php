@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use function PHPSTORM_META\map;
+
 class CourseDetailResources extends JsonResource
 {
     /**
@@ -16,11 +18,16 @@ class CourseDetailResources extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            'course_id' => (string) $this->id,
-            'course_title' => $this->name,
-            'course_thumnail' => $this->thumnail_url,
-            'course_price' => (string) $this->price,
-            'course_introduce' => $this->introduce,
+            'id' => (string) $this->id,
+            'title' => $this->name,
+            'thumnail' => $this->thumnail_url,
+            'price' => (string) $this->price,
+            'introduce' => $this->introduce,
+            'students_count' => $this->students_count,
+            'sections' => SectionResource::collection($this->sections),
+            'topics' => TopicResource::collection($this->topics),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

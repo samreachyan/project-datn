@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CourseDetailResources;
 use App\Http\Resources\CoursePageResources;
 use App\Http\Resources\CourseResource;
 use App\Models\Course;
@@ -47,9 +48,15 @@ class CourseController extends Controller
         } else {
             $course = Course::withCount('students')->where('id', $request->id_course)->first();
 
+            if (!$course) {
+                return [
+                    'msg' => 'Course not found',
+                    'data' => null
+                ];
+            }
             return [
                 'msg' => 'Found course successfully',
-                'data' => $course
+                'data' => new CourseDetailResources($course)
             ];
         }
     }
