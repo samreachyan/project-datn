@@ -20,7 +20,7 @@ class CourseDetailResources extends JsonResource
         return [
             'id' => (string) $this->id,
             'title' => $this->name,
-            'thumnail' => $this->thumnail_url,
+            'thumbnail' => $this->thumbnail_url,
             'price' => (string) $this->price,
             'introduce' => $this->introduce,
             'students_count' => $this->students_count,
