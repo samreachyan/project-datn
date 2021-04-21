@@ -50,4 +50,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // instructor profile information
     Route::post('/instructor-profile', [APIAccountController::class, 'instructorProfile']);
+    Route::post('/follow-instructor', [APIAccountController::class, 'followInstructor']);
+    Route::post('/unfollow-instructor', [APIAccountController::class, 'unfollowInstructor']);
 });

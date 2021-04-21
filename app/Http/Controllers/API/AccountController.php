@@ -422,6 +422,50 @@ class AccountController extends Controller
     }
 
     /**
+     * student follow instructor by token
+     */
+    public function followInstructor(Request $request) {
+        $rules = array(
+            'id_instructor' => 'required|string',
+            'id_student' => 'required|string'
+        );
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $msg = $validator->errors();
+            return [ 'msg' => $msg, 'data' => null ];
+        } else {
+
+            return [
+                'msg' => 'followed instructor',
+                'data' => null
+            ];
+        }
+    }
+
+    /**
+     * unfollow any instructor by id
+     */
+    public function unfollowInstructor(Request $request) {
+        $rules = array(
+            'id_instructor' => 'required|string',
+            'id_student' => 'required|string'
+        );
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $msg = $validator->errors();
+            return [ 'msg' => $msg, 'data' => null ];
+        } else {
+
+            return [
+                'msg' => 'unfollowed instructor',
+                'data' => null
+            ];
+        }
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
