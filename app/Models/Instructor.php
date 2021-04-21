@@ -26,7 +26,7 @@ class Instructor extends Model
     }
     public function course()
     {
-        return $this->hasMany('App\Models\Course');
+        return $this->hasMany('App\Models\Course', 'instructor_id', 'account_id');
     }
     public function connects()
     {

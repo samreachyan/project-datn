@@ -406,11 +406,7 @@ class AccountController extends Controller
             $msg = $validator->errors();
             return [ 'msg' => $msg, 'data' => null ];
         } else {
-            $id = $request->id;
-            $instructor = Instructor::where('account_id', $id)->first();
-            return [
-                $instructor
-            ];
+            $instructor = Instructor::where('account_id', $request->id)->first();
 
             if ($instructor == null) {
                 return [

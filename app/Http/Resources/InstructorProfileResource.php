@@ -24,7 +24,7 @@ class InstructorProfileResource extends JsonResource
             'bio' => $this->bio,
             'introduce' => $this->introduce,
             'avatar_url' => $this->account->avatar_url,
-            'courses' => $this->account,
+            'courses' => CourseResource::collection($this->course),
         ];
     }
 }
