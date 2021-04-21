@@ -4,9 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\InstructorProfileResource;
 use App\Http\Resources\UserResource;
 use App\Jobs\SendVerifyEmail;
 use App\Models\Account;
+use App\Models\Instructor;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -387,6 +389,39 @@ class AccountController extends Controller
                     "data" => new UserResource($user)
                 ];
             }
+        }
+    }
+
+    /**
+        * view profile instructor
+
+    **/
+    public function instructorProfile(Request $request) {
+        $rules = array(
+            'id' => 'required|string',
+        );
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $msg = $validator->errors();
+            return [ 'msg' => $msg, 'data' => null ];
+        } else {
+            $id = $request->id;
+            $instructor = Instructor::where('account_id', $id)->first();
+            return [
+                $instructor
+            ];
+
+            if ($instructor == null) {
+                return [
+                    'msg' => 'Not found instructor profile information',
+                    'data' => 'null'
+                ];
+            }
+            return [
+                'msg' => 'Found instructor profile information',
+                'data' => new InstructorProfileResource($instructor),
+            ];
         }
     }
 

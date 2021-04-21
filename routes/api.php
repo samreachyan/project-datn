@@ -47,4 +47,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/get-all-courses', [APICourseController::class, 'getAllCourses']);
     Route::post('/hot-courses', [APICourseController::class, 'hotCourses']);
     Route::post('/course-details', [APICourseController::class, 'courseDetails']);
+
+    // instructor profile information
+    Route::post('/instructor-profile', [APIAccountController::class, 'instructorProfile']);
 });

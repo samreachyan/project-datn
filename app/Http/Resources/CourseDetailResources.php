@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Account;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 use function PHPSTORM_META\map;
@@ -25,6 +26,7 @@ class CourseDetailResources extends JsonResource
             'introduce' => $this->introduce,
             'students_count' => $this->students_count,
             'sections' => SectionResource::collection($this->sections),
+            'instructor' => new InstructorResource(Account::find($this->instructor_id)),
             'topics' => TopicResource::collection($this->topics),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

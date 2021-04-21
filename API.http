@@ -92,18 +92,38 @@ POST http://localhost:8000/api/get-all-courses HTTP/1.1
 Authorization: Bearer 1|Y75na4O3u1KLZmuqzIwq02EfxxYlzohZredR3xTL
 
 ### get hot courses
-POST http://localhost:8000/api/hot-courses
+POST http://localhost:8000/api/hot-courses HTTP/1.1
 Authorization: Bearer 1|Y75na4O3u1KLZmuqzIwq02EfxxYlzohZredR3xTL
 
 ### get hot cousrses the next page
-POST http://localhost:8000/api/hot-courses?page=2
+POST http://localhost:8000/api/hot-courses?page=2 HTTP/1.1
 Authorization: Bearer 1|Y75na4O3u1KLZmuqzIwq02EfxxYlzohZredR3xTL
 
 ### course details, params id
-POST http://localhost:8000/api/course-details
+POST http://localhost:8000/api/course-details HTTP/1.1
 Authorization: Bearer 1|Y75na4O3u1KLZmuqzIwq02EfxxYlzohZredR3xTL
 Content-Type: 'application/json'
 
 {
-    "id_course": "27"
+    "id_course": "2"
+}
+
+
+### post quize checker
+POST http://localhost:8000/api/post-quiz HTTP/1.1
+Authorization: Bearer 1|Y75na4O3u1KLZmuqzIwq02EfxxYlzohZredR3xTL
+Content-Type: 'application/json'
+
+{
+    "highest_score": "100",
+    // not do
+}
+
+### view instructor profie
+POST http://localhost:8000/api/instructor-profile HTTP/1.1
+Authorization: Bearer 1|Y75na4O3u1KLZmuqzIwq02EfxxYlzohZredR3xTL
+Content-Type: 'application/json'
+
+{
+    "id": "2"
 }
