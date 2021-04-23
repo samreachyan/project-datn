@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Enums\UserRole;
 
-    class Account extends Authenticatable
+class Account extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 

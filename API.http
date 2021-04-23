@@ -127,3 +127,7 @@ Content-Type: 'application/json'
 {
     "id": "2"
 }
+
+### get test auth token
+POST http://localhost:8000/api/get HTTP/1.1
+Authorization: Bearer 1|Y75na4O3u1KLZmuqzIwq02EfxxYlzohZredR3xTL

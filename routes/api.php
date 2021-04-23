@@ -35,7 +35,7 @@ Route::post('/forgot-password', [APIAccountController::class, 'forgotPassword'])
 Route::post('/reset-password', [APIAccountController::class, 'resetPassword']);
 
 // Authorization
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::post('/get', function () {
         return ['get test'];
     });
