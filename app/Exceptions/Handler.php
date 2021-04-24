@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -33,5 +34,25 @@ class Handler extends ExceptionHandler
     public function register()
     {
         //
+    }
+
+    /**
+     * Convert an authentication exception into a response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Auth\AuthenticationException  $exception
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+
+	// Here you can return your own response or work with request
+	// return response()->json(['status' : false], 401);
+
+	// This is the default
+        return $request->expectsJson()
+                    ? response()->json(['msg' => $exception->getMessage(), "data" => null ], 401)
+                    : redirect()->guest($exception->redirectTo() ?? route('login'));
     }
 }
