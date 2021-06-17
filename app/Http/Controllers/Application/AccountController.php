@@ -191,7 +191,7 @@ class AccountController extends Controller
                     // Authentication passed...
                     // $a = Auth::user()->role;
                     if (Auth::user()->role == UserRole::Instructor) {
-                        return response()->json(['status' => 'success', 'mss' => route('instructor_dashboard', ['username' => Auth::user()->username])]);
+                        return response()->json(['status' => 'success', 'mss' => route('manage_courses', ['username' => Auth::user()->username])]);
                         // return redirect()->route('instructor_dashboard', ['username' => Auth::user()->username]);
                     }
                     if (Auth::user()->role == UserRole::Student) {

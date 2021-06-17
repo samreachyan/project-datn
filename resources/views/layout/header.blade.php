@@ -76,7 +76,7 @@
 
         @if (Auth::check())
         <!-- Notifications dropdown -->
-        <div class="nav-item dropdown dropdown-notifications dropdown-xs-down-full" data-toggle="tooltip" data-title="Tin nhắn" data-placement="bottom" data-boundary="window">
+        {{-- <div class="nav-item dropdown dropdown-notifications dropdown-xs-down-full" data-toggle="tooltip" data-title="Tin nhắn" data-placement="bottom" data-boundary="window">
             <button class="nav-link btn-flush dropdown-toggle" type="button" data-toggle="dropdown" data-caret="false">
                 <i class="material-icons icon-24pt">mail_outline</i>
             </button>
@@ -130,7 +130,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- // END Notifications dropdown -->
 
 

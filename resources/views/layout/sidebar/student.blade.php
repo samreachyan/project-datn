@@ -17,12 +17,12 @@
             <span class="sidebar-menu-text">Khoá học</span>
         </a>
     </li>
-    <li class="sidebar-menu-item @yield('active-bpath')">
+    {{-- <li class="sidebar-menu-item @yield('active-bpath')">
         <a class="sidebar-menu-button" href="student/browse-path">
             <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">style</span>
             <span class="sidebar-menu-text">Lộ trình</span>
         </a>
-    </li>
+    </li> --}}
     <li class="sidebar-menu-item @yield('active-dashboard')">
         <a class="sidebar-menu-button" href="student/{{ Auth::user()->username }}/dashboard">
             <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">account_box</span>
@@ -35,12 +35,12 @@
             <span class="sidebar-menu-text">Khoá học của tôi</span>
         </a>
     </li> --}}
-    <li class="sidebar-menu-item @yield('active-mpath')">
+    {{-- <li class="sidebar-menu-item @yield('active-mpath')">
         <a class="sidebar-menu-button" href="{{route('my_path')}}">
             <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">timeline</span>
             <span class="sidebar-menu-text">Lộ trình của tôi</span>
         </a>
-    </li>
+    </li> --}}
     {{-- <li class="sidebar-menu-item @yield('active-mquiz')">
         <a class="sidebar-menu-button" href="student/my-quizzes">
             <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">poll</span>
