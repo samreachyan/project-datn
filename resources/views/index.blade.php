@@ -78,18 +78,18 @@
                         </li>
                     </ul>
                 </div>
-{{--
-                <div class="hero container page__container text-center text-md-left py-112pt">
+
+                <div class="hero container page__container text-center text-md-left py-110pt">
                     <h1 class="text-white text-shadow">Learn to Code</h1>
-                    <p class="lead measure-hero-lead mx-auto mx-md-0 text-white text-shadow mb-48pt">Business, Technology and Creative Skills taught by industry experts. Explore a wide range of skills with our professional tutorials.</p>
+                    <p class="lead measure-hero-lead mx-auto mx-md-0 text-white text-shadow mb-48pt">Cùng học lập trình với bạn để trở thành lập trình viên chuyên nghiệp.</p>
 
 
-                    <a href="fixed-courses" class="btn btn-lg btn-white btn--raised mb-16pt">Browse Courses</a>
+                    <a href={{ route('signup') }} class="btn btn-lg btn-white btn--raised mb-16pt">Browse Courses</a>
 
 
-                    <p class="mb-0"><a href="" class="text-white text-shadow"><strong>Are you a teacher?</strong></a></p>
+                    <p class="mb-3"><a href={{ route('login') }} class="text-white text-shadow"><strong>Are you a teacher?</strong></a></p>
 
-                </div> --}}
+                </div>
             </div>
         </div>
 
@@ -99,7 +99,7 @@
         <div class="mdk-header-layout__content page-content ">
 
 
-            <div class="bg-white border-bottom-2 py-16pt ">
+            {{-- <div class="bg-white border-bottom-2 py-16pt ">
                 <div class="container page__container">
                     <div class="row align-items-center">
                         <div class="d-flex col-md align-items-center border-bottom border-md-0 mb-16pt mb-md-0 pb-16pt pb-md-0">
@@ -131,7 +131,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
 
             <div class="page-section border-bottom-2">

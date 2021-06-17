@@ -14,13 +14,13 @@
             <span class="sidebar-menu-text">Quản lý khoá học</span>
         </a>
     </li>
-    <li class="sidebar-menu-item @yield('active-earnings')">
+    {{-- <li class="sidebar-menu-item @yield('active-earnings')">
         <a class="sidebar-menu-button" href="{{ route('earning') }}">
-        {{-- <a class="sidebar-menu-button" href="/instructor/earning"> --}}
+        <a class="sidebar-menu-button" href="/instructor/earning">
             <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">trending_up</span>
             <span class="sidebar-menu-text">Thu nhập</span>
         </a>
-    </li>
+    </li> --}}
     {{-- <li class="sidebar-menu-item @yield('active-statement')">
         <a class="sidebar-menu-button" href="{{ route('statement') }}">
             <span class="material-icons sidebar-menu-icon sidebar-menu-icon--left">receipt</span>

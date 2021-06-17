@@ -2,7 +2,7 @@
 <div class="navbar-custom">
     <ul class="list-unstyled topbar-right-menu float-right mb-0">
 
-        <li class="dropdown notification-list">
+        {{-- <li class="dropdown notification-list">
             <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                 <i class="dripicons-bell noti-icon"></i>
                 <span class="noti-icon-badge"></span>
@@ -89,7 +89,7 @@
                 </a>
 
             </div>
-        </li>
+        </li> --}}
 
         <li class="dropdown notification-list">
             <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"

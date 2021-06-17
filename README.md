@@ -1,5 +1,5 @@
 ## Môi trường cần thiết
-- Liên hệ [Facebook](fb.me/SownBanana) nếu gặp bất cứ lỗi nào :D
+- Liên hệ [Facebook](fb.me/yan.samreach) nếu gặp bất cứ lỗi nào :D
 - **Laravel 8.17.2**
 - XAMPP (khuyên dùng :D)
 - **Internet**: dùng cho dịch vụ reCaptcha v3 và Drive Của Google. Nếu có chậm/lỗi phần đăng nhập _(mấy hôm nay google hay trục trặc)_, comment code ở `app\Http\Controllers\Application\AccountController.php` dòng `151` đặt `$disableCaptcha = true` để disable **reCaptcha**.
@@ -26,21 +26,22 @@
     ---
        - Facebook 
 
-        FACEBOOK_APP_ID = 431362884691933
-        FACEBOOK_APP_SECRET = 605093749703e62024a8485ced5fa200
-        FACEBOOK_APP_CALLBACK_URL = http://localhost:8000/callback/facebook
-       
+        FACEBOOK_APP_ID=821354998716469
+        FACEBOOK_APP_SECRET=42e8d3c44f7c806244e1d74fa2600c25
+        FACEBOOK_APP_CALLBACK_URL=http://vinacourse.com:8000/callback/facebook
+
        - Google
 
-        GOOGLE_APP_ID = 781710882056-u94tvuhd3pd2i7sk5hucj4fj5cg9q01q.apps.googleusercontent.com
-        GOOGLE_APP_SECRET = e6uQZiDvRzXrgWc0l6gD-m2s
-        GOOGLE_APP_CALLBACK_URL = http://localhost:8000/callback/google
+        GOOGLE_APP_ID=1024311172558-7leink819rgrqhnie3af96v39aum4n8e.apps.googleusercontent.com
+        GOOGLE_APP_SECRET=zj4UowfHrki1hWn5PWgTh1hR
+        GOOGLE_APP_CALLBACK_URL=http://127.0.0.1:8000/callback/google
 
        - Github
 
-        GITHUB_APP_ID = 399b355ec5ff8bb9f68e
-        GITHUB_APP_SECRET = cc6bf8c71aee1b9577ea0f90729d9b698854d6bf
-        GITHUB_APP_CALLBACK_URL = http://vinacourse.local/callback/github
+        GITHUB_APP_ID=8ce4ad9f77d7b4844d88
+        GITHUB_APP_SECRET=cadb9e1557480d810b8d7816806ad5a7c68d5b9e
+        GITHUB_APP_CALLBACK_URL=http://localhost:8000/callback/github
+        
         
 
 ## **Server**
@@ -68,8 +69,8 @@
     Sinh ra 3 tài khoản có username và password là:
         - admin - admin
         - teacher - teacher
-        - student -student
-- Khởi tạo Queue - **Giữ terminal này luôn chạy** *(gửi email và thông báo)*:
+        - student - student
+- Khởi tạo Queue - **Giữ terminal này luôn chạy** *(gửi email và thông báo)* nếu trên ubuntu thì không cần:
 ```console
     ~$ php artisan queue:work
 ```

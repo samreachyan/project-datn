@@ -42,7 +42,10 @@
                                 <tr>
                                     <td>{{ $item->name }}</td>
                                     <td class="table-user">
-                                        <img src={{ asset($item->avatar_url) }} alt="avatar" class="mr-2 rounded-circle" />
+                                        <img src="@if ($item->avatar_url)
+                                            {!!asset($item->avatar_url)!!}
+                                        @else/admin/images/users/avatar-1.jpg
+                                        @endif" alt="avatar" class="mr-2 rounded-circle" />
                                         {{ $item->username }}
                                     </td>
                                     <td>@if ($item->role == 1) admin @elseif ($item->role == 2) instructor @else student @endif</td>
