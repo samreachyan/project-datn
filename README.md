@@ -1,5 +1,6 @@
 ## Môi trường cần thiết
-- Liên hệ [Facebook](fb.me/yan.samreach) nếu gặp bất cứ lỗi nào
+- Liên hệ [Facebook](https://fb.me/yan.samreach) nếu gặp bất cứ lỗi nào
+- Email samreachyan@gmail.com
 - Xem code đầy đủ trên [GITHUB](https://github.com/samreachyan/project-datn) 
 - **Laravel 8**
 - XAMPP (khuyên dùng :D)
