@@ -1,7 +1,9 @@
 ## Môi trường cần thiết
-- Liên hệ [Facebook](fb.me/yan.samreach) nếu gặp bất cứ lỗi nào :D
-- **Laravel 8.17.2**
+- Liên hệ [Facebook](fb.me/yan.samreach) nếu gặp bất cứ lỗi nào
+- Xem code đầy đủ trên [GITHUB](https://github.com/samreachyan/project-datn) 
+- **Laravel 8**
 - XAMPP (khuyên dùng :D)
+- Nếu thích Ubuntu thì phải cài (MySql Server, Apache2, Composer 2, Môi Trường Laravel, Cài các thư viện `vendor` của laravel)
 - **Internet**: dùng cho dịch vụ reCaptcha v3 và Drive Của Google. Nếu có chậm/lỗi phần đăng nhập _(mấy hôm nay google hay trục trặc)_, comment code ở `app\Http\Controllers\Application\AccountController.php` dòng `151` đặt `$disableCaptcha = true` để disable **reCaptcha**.
 
 ## Cấu hình file `.env`
