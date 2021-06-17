@@ -8,6 +8,6 @@
             <a href="" class="text-70 text-underline mr-8pt small">Terms</a>
             <a href="" class="text-70 text-underline small">Privacy policy</a>
         </p>
-        <p class="text-50 small mt-n1 mb-0">Copyright 2019 &copy; All rights reserved.</p>
+        <p class="text-50 small mt-n1 mb-0">Copyright 2021 &copy; All rights reserved.</p>
     </div>
 </div>

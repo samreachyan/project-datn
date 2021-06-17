@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/test', function () {
-    return response()->json([ 'msg' => "hello world", 'data' => [ 'm' => 'mes', 'n' => 'work'] ], 200);
+    return response()->json(['msg' => "hello world", 'data' => ['m' => 'mes', 'n' => 'work']], 200);
 });
 
 // Login and Signup

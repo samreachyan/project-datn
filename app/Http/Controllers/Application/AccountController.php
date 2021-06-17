@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Session;
 use Mail;
 use App\Jobs\SendVerifyEmail;
 use App\Jobs\SendResetPasswordEmail;
+use App\Models\Course;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
@@ -31,21 +32,24 @@ class AccountController extends Controller
         if (Auth::check()) {
             $role = Auth::user()->role;
             switch ($role) {
-                case UserRole::Student:{
-                    return redirect()->route('student_dashboard', ['username' => Auth::user()->username]);
-                }
-                case UserRole::Instructor:{
-                    return redirect()->route('instructor_dashboard', ['username' => Auth::user()->username]);
-                }
-                case UserRole::Admin:{
-                    return redirect()->route('admin_home', ['username' => Auth::user()->username]);
-                }
-                default:{
-                    return redirect()->route('home');
-                }
+                case UserRole::Student: {
+                        return redirect()->route('student_dashboard', ['username' => Auth::user()->username]);
+                    }
+                case UserRole::Instructor: {
+                        return redirect()->route('instructor_dashboard', ['username' => Auth::user()->username]);
+                    }
+                case UserRole::Admin: {
+                        return redirect()->route('admin_home', ['username' => Auth::user()->username]);
+                    }
+                default: {
+                        return redirect()->route('home');
+                    }
             }
         } else {
-            return view('index');
+            $courses = Course::withCount('students')->orderBy('created_at', 'desc')->with('topics')->paginate(8);
+            // dd($courses);
+
+            return view('index', ['courses' => $courses]);
         }
     }
     public function getUser($username)
@@ -56,21 +60,21 @@ class AccountController extends Controller
             $role = $account->role;
         }
         switch ($role) {
-            case UserRole::Student:{
-                return redirect()->route('student_dashboard', ['username' => $username]);
-            }
-            case UserRole::Instructor:{
-                return view('instructor.dashboard.profile', ['account'=>$account,'instructor' => Instructor::find($account->id)]);
-            }
-            default:{
-                return redirect()->route('home');
-            }
+            case UserRole::Student: {
+                    return redirect()->route('student_dashboard', ['username' => $username]);
+                }
+            case UserRole::Instructor: {
+                    return view('instructor.dashboard.profile', ['account' => $account, 'instructor' => Instructor::find($account->id)]);
+                }
+            default: {
+                    return redirect()->route('home');
+                }
         }
     }
 
     public function store(Request $request)
     {
-        $confirmation_code = time().uniqid(true);
+        $confirmation_code = time() . uniqid(true);
         $account = new Account;
         $account->name = $request->name;
         $account->username = $request->username;
@@ -116,13 +120,13 @@ class AccountController extends Controller
             $account = Account::where('username', $login_info)->first();
         }
         if ($account) {
-            $confirmation_code = time().uniqid(true);
+            $confirmation_code = time() . uniqid(true);
             $account->confirmation_code = $confirmation_code;
             $account->save();
             dispatch(new SendVerifyEmail($account));
-            return response()->json(['status'=>'Thành công','mss'=>'Đã gửi email xác thực cho '.$account->email]);
+            return response()->json(['status' => 'Thành công', 'mss' => 'Đã gửi email xác thực cho ' . $account->email]);
         }
-        return response()->json(['status'=>'error', 'mss'=>'Không tìm thấy thông tin đăng nhập '.$account->email]);
+        return response()->json(['status' => 'error', 'mss' => 'Không tìm thấy thông tin đăng nhập ' . $account->email]);
     }
 
     public function policy()
@@ -160,20 +164,20 @@ class AccountController extends Controller
 
                 if ($response->success === false) {
                     //Do something with error
-                    return response()->json(['status'=>'token_error', 'mss'=>"Lỗi captcha."]);
+                    return response()->json(['status' => 'token_error', 'mss' => "Lỗi captcha."]);
                 }
             } else {
-                return response()->json(['status'=>'token_error', 'mss'=>"Lỗi captcha."]);
+                return response()->json(['status' => 'token_error', 'mss' => "Lỗi captcha."]);
             }
         }
-        if ($disableCaptcha || $response->success==true && $response->score >= 0.5) {
+        if ($disableCaptcha || $response->success == true && $response->score >= 0.5) {
             //Do something to denied access
             $login_info = $request->login;
             // $pass = $request->password;
             if (filter_var($login_info, FILTER_VALIDATE_EMAIL)) {
                 //user sent their email
                 $user = Account::whereRaw('LOWER(email) = ?', $login_info)->first();
-            // Auth::attempt(['email' => $login_info, 'password' => $request->password], $request->remember_me);
+                // Auth::attempt(['email' => $login_info, 'password' => $request->password], $request->remember_me);
             } else {
                 //they sent their username instead
                 $user = Account::whereRaw('LOWER(username) = ?', $login_info)->first();
@@ -187,29 +191,29 @@ class AccountController extends Controller
                     // Authentication passed...
                     // $a = Auth::user()->role;
                     if (Auth::user()->role == UserRole::Instructor) {
-                        return response()->json(['status'=>'success', 'mss'=>route('instructor_dashboard', ['username' => Auth::user()->username])]);
+                        return response()->json(['status' => 'success', 'mss' => route('instructor_dashboard', ['username' => Auth::user()->username])]);
                         // return redirect()->route('instructor_dashboard', ['username' => Auth::user()->username]);
                     }
                     if (Auth::user()->role == UserRole::Student) {
-                        return response()->json(['status'=>'success', 'mss'=>route('student_dashboard', ['username' => Auth::user()->username])]);
+                        return response()->json(['status' => 'success', 'mss' => route('student_dashboard', ['username' => Auth::user()->username])]);
                         // return redirect()->route('student_dashboard', ['username' => Auth::user()->username]);
                     }
                     if (Auth::user()->role == UserRole::Admin) {
-                        return response()->json(['status'=>'success', 'mss'=>route('admin_home', ['username' => Auth::user()->username])]);
+                        return response()->json(['status' => 'success', 'mss' => route('admin_home', ['username' => Auth::user()->username])]);
                         // return redirect()->route('student_dashboard', ['username' => Auth::user()->username]);
                     }
                 }
                 $email = Auth::user()->email;
                 Auth::logout();
-                return response()->json(['status'=>'error_verify', 'mss'=>"Tài khoản chưa được xác thực.", 'email'=>$email]);
+                return response()->json(['status' => 'error_verify', 'mss' => "Tài khoản chưa được xác thực.", 'email' => $email]);
             }
             if ($user == null) {
-                return response()->json(['status'=>'error_info', 'mss'=>"Không tìm thấy thông tin đăng nhập."]);
+                return response()->json(['status' => 'error_info', 'mss' => "Không tìm thấy thông tin đăng nhập."]);
             } else {
-                return response()->json(['status'=>'error_password', 'mss'=>"Sai mật khẩu."]);
+                return response()->json(['status' => 'error_password', 'mss' => "Sai mật khẩu."]);
             }
         } else {
-            return response()->json(['status'=>'error_robot', 'mss'=>"Get away you Robot."]);
+            return response()->json(['status' => 'error_robot', 'mss' => "Get away you Robot."]);
         }
     }
 
@@ -221,13 +225,13 @@ class AccountController extends Controller
     {
         $account = Account::whereRaw('LOWER(username) = ?', $request->username)->first();
         if ($account) {
-            return redirect()->back()->withErrors(['username','Username đã được sử dụng'])->withInput();
+            return redirect()->back()->withErrors(['username', 'Username đã được sử dụng'])->withInput();
         }
         $rules = array(
-            'name'=>'bail|required|string|min:2|',
-            'username'=>'bail|required|string|min:2|unique:accounts',
-            'email'=>'bail|required|email|unique:accounts',
-            'password'=>'bail|required|string|min:6'
+            'name' => 'bail|required|string|min:2|',
+            'username' => 'bail|required|string|min:2|unique:accounts',
+            'email' => 'bail|required|email|unique:accounts',
+            'password' => 'bail|required|string|min:6'
         );
         $validator = Validator::make($request->all(), $rules);
         if (!$validator->fails()) {
@@ -247,7 +251,7 @@ class AccountController extends Controller
 
     public function change_password(Request $request)
     {
-        return view('application.account.reset-password', ['code'=>$request->code]);
+        return view('application.account.reset-password', ['code' => $request->code]);
     }
     public function post_change_password(Request $request)
     {
@@ -260,18 +264,18 @@ class AccountController extends Controller
             Auth::logoutOtherDevices($request->password);
             return redirect()->route('home');
         } else {
-            $notification_status ='Đường dẫn hết hạn';
-            return response(['error'=>true,'error-msg'=>$notification_status], 419);
+            $notification_status = 'Đường dẫn hết hạn';
+            return response(['error' => true, 'error-msg' => $notification_status], 419);
         }
     }
 
     public function request_change_password()
     {
-        $confirmation_code = time().uniqid(true);
+        $confirmation_code = time() . uniqid(true);
         Auth::user()->confirmation_code = $confirmation_code;
         Auth::user()->save();
         dispatch(new SendResetPasswordEmail(Auth::user()));
-        return response()->json(['status'=>'success', 'mss'=>"Email hướng dẫn đổi mật khẩu đã được gửi cho bạn"]);
+        return response()->json(['status' => 'success', 'mss' => "Email hướng dẫn đổi mật khẩu đã được gửi cho bạn"]);
     }
 
     public function forgot_password(Request $request)
@@ -283,13 +287,13 @@ class AccountController extends Controller
             $account = Account::whereRaw('LOWER(username) = ?', $login_info)->first();
         }
         if ($account == null) {
-            return response()->json(['status'=>'error', 'mss'=>"Không tìm thấy thông tin đăng nhập."]);
+            return response()->json(['status' => 'error', 'mss' => "Không tìm thấy thông tin đăng nhập."]);
         } else {
-            $confirmation_code = time().uniqid(true);
+            $confirmation_code = time() . uniqid(true);
             $account->confirmation_code = $confirmation_code;
             $account->save();
             dispatch(new SendResetPasswordEmail($account));
-            return response()->json(['status'=>'success', 'mss'=>"Email hướng dẫn đổi mật khẩu đã được gửi cho bạn nếu email/username của bạn tồn tại
+            return response()->json(['status' => 'success', 'mss' => "Email hướng dẫn đổi mật khẩu đã được gửi cho bạn nếu email/username của bạn tồn tại
             trong hệ thống."]);
         }
     }
@@ -307,7 +311,7 @@ class AccountController extends Controller
             $user->email = $request->email;
             if ($request->hasFile('avatar')) {
                 $image = $request->file('avatar');
-                $fileName = $user->username .'-avatar-200x200'. '.' . $image->getClientOriginalExtension();
+                $fileName = $user->username . '-avatar-200x200' . '.' . $image->getClientOriginalExtension();
 
                 $avatar = Image::make($image->getRealPath());
                 $avatar->resize(200, 200, function ($constraint) {
@@ -315,11 +319,11 @@ class AccountController extends Controller
                 });
 
                 $avatar->stream();
-                if (Storage::exists('public/images/avatars'.'/'.$fileName)) {
-                    Storage::delete('public/images/avatars'.'/'.$fileName);
+                if (Storage::exists('public/images/avatars' . '/' . $fileName)) {
+                    Storage::delete('public/images/avatars' . '/' . $fileName);
                 }
-                Storage::disk('local')->put('public/images/avatars'.'/'.$fileName, $avatar, 'public');
-                $user->avatar_url = Storage::url('public/images/avatars'.'/'.$fileName);
+                Storage::disk('local')->put('public/images/avatars' . '/' . $fileName, $avatar, 'public');
+                $user->avatar_url = Storage::url('public/images/avatars' . '/' . $fileName);
             }
             if ($user->role == UserRole::Instructor) {
                 $instructor = Instructor::find($user->id);
@@ -327,9 +331,9 @@ class AccountController extends Controller
                 $instructor->save();
             }
             $user->save();
-            return response()->json(['status'=>'success']);
+            return response()->json(['status' => 'success']);
         }
-        return response()->json(['status'=>'error']);
+        return response()->json(['status' => 'error']);
     }
 
     public function email_notification()

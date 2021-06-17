@@ -1,0 +1,140 @@
+Schema::create('accounts', function (Blueprint $table) {
+    $table->id();
+    $table->string('name');
+    $table->string('username')->unique()->nullable();
+    $table->string('email')->unique()->nullable();
+    $table->string('confirmation_code')->nullable();
+    $table->string('avatar_url')->nullable();
+    $table->boolean('is_verified')->default(false);
+    $table->string('password')->nullable();
+    $table->unsignedInteger('role')->default('1');
+    $table->rememberToken();
+    $table->timestamps();
+});
+
+
+$table->integer('account_id')->primary();
+$table->longText('introduce')->nullable();
+$table->longText('bio')->nullable();
+$table->timestamps();
+
+
+$table->integer('account_id')->primary();
+$table->timestamps();
+
+
+Schema::create('social_accounts', function (Blueprint $table) {
+$table->integer('user_id');
+$table->string('provider_user_id');
+$table->string('provider');
+$table->timestamps();
+
+$table->foreign('user_id')->references('account_id')->on('students')->onDelete('cascade');
+});
+
+Schema::create('courses', function (Blueprint $table) {
+$table->id();
+$table->integer('instructor_id');
+$table->string('name');
+$table->longText('introduce');
+$table->string('thumbnail_url')->nullable();
+$table->float('price');
+$table->timestamps();
+
+$table->foreign('instructor_id')->references('account_id')->on('instructors');
+});
+
+Schema::create('sections', function (Blueprint $table) {
+$table->id();
+$table->integer('course_id');
+$table->string('name');
+$table->timestamps();
+
+$table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+});
+
+Schema::create('lessons', function (Blueprint $table) {
+$table->id();
+$table->string('name');
+$table->integer('section_id');
+$table->string('duration');
+$table->string('video_url')->nullable();
+$table->longText('info');
+$table->timestamps();
+});
+
+Schema::create('quizzes', function (Blueprint $table) {
+$table->id();
+$table->string('name');
+$table->integer('section_id');
+$table->longText('question');
+$table->timestamps();
+});
+
+Schema::create('answers', function (Blueprint $table) {
+$table->id();
+$table->integer('quiz_id');
+$table->integer('is_true');
+$table->string('content');
+$table->timestamps();
+});
+
+Schema::create('nofitications', function (Blueprint $table) {
+$table->uuid('id')->primary();
+$table->string('type');
+$table->morphs('notifiable');
+$table->text('data');
+$table->timestamp('read_at')->nullable();
+$table->timestamps();
+});
+
+Schema::create('follows', function (Blueprint $table) {
+$table->id();
+$table->integer('instructor_id');
+$table->integer('student_id');
+$table->timestamps();
+
+$table->foreign('student_id')->references('account_id')->on('students')->onDelete('cascade');
+$table->foreign('instructor_id')->references('account_id')->on('instructors')->onDelete('cascade');
+});
+
+Schema::create('section_student', function (Blueprint $table) {
+$table->integer('section_id');
+$table->integer('student_id');
+$table->float('highest_point')->nullable();
+$table->integer('lesson_id')->nullable();
+$table->timestamps();
+
+$table->foreign('student_id')->references('account_id')->on('students')->onDelete('cascade');
+});
+
+Schema::create('course_student', function (Blueprint $table) {
+$table->integer('course_id');
+$table->integer('student_id');
+$table->float('progress')->default(0.0);
+$table->integer('section_id')->nullable();
+$table->timestamps();
+
+$table->foreign('student_id')->references('account_id')->on('students')->onDelete('cascade');
+});
+
+Schema::create('topics', function (Blueprint $table) {
+$table->id();
+$table->string('name')->unique();
+$table->string('icon');
+$table->timestamps();
+});
+
+Schema::create('favorite_topic', function (Blueprint $table) {
+$table->integer('topic_id');
+$table->integer('student_id');
+$table->timestamps();
+});
+
+Schema::create('course_topic', function (Blueprint $table) {
+$table->integer('course_id');
+$table->integer('topic_id');
+$table->timestamps();
+
+$table->foreign('student_id')->references('account_id')->on('students')->onDelete('cascade');
+});

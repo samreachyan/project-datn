@@ -8,7 +8,7 @@
         @endif
         @foreach ($courses as $course)
             {{-- {{$course->introduce}} --}}
-            <div course_id="{{$course->id}}" class="course_element col-sm-6 col-md-4 col-xl-3">      
+            <div course_id="{{$course->id}}" class="course_element col-sm-6 col-md-4 col-xl-3">
                 <div class="card card-sm card--elevated p-relative o-hidden overlay overlay--primary js-overlay mdk-reveal js-mdk-reveal" data-partial-height="44" data-toggle="popover" data-trigger="click">
                     <a href="" class="js-image itemheight" data-position="">
                         <img src="@if ($course->thumbnail_url)
@@ -137,11 +137,11 @@
                             </p>
                         </div>
                     </div>
-            
+
                     <div class="my-16pt">
                         {!! Str::of($course->introduce)->limit(1000) !!}
                     </div>
-    
+
                     <div ds class="row align-items-center">
                         <div class="col-auto">
                             <div class="d-flex align-items-center mb-4pt">
@@ -177,9 +177,9 @@
                             <a class="btn btn-primary whiteButton editCourse {{$course->id}}">Sửa khoá học</a>
                         </div>
                     </div>
-    
+
                 </div>
-    
+
             </div>
         @endforeach
 

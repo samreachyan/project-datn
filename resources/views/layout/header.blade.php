@@ -32,7 +32,7 @@
     <button class="navbar-toggler w-auto mr-16pt d-block @yield('menu_button') rounded-0" type="button" data-toggle="sidebar">
         <span class="material-icons">short_text</span>
     </button>
-            @if (Auth::user()->role == App\Enums\UserRole::Instructor)
+            {{-- @if (Auth::user()->role == App\Enums\UserRole::Instructor)
             <span class="d-none d-md-flex align-items-center mr-16pt">
 
                 <span class="avatar avatar-sm mr-12pt">
@@ -65,7 +65,7 @@
                     <span class="navbar-text-50">2,300 points</span>
                 </small>
             </span>
-            @endif
+            @endif --}}
         @endif
 
     <div class="flex"></div>
@@ -204,6 +204,7 @@
             @else
             <div class="dropdown-menu dropdown-menu-right">
             <div class="dropdown-header"><strong>Tài khoản</strong></div>
+                <a class="dropdown-item" href="{{route('home')}}">Trang chủ</a>
                 <a class="dropdown-item" href="{{route('login')}}">Đăng nhập</a>
                 <a class="dropdown-item" href="{{route('signup')}}">Tạo tài khoản</a>
             </div>
