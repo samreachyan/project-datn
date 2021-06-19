@@ -25,7 +25,7 @@
             <!-- end page title -->
 
             <div class="row">
-                <div class="col-xl-4 col-lg-12">
+                <div class="col-xl-12 col-lg-12">
                     <div class="card cta-box bg-white">
                         <table class="table table-centered mb-0">
                             <thead>
@@ -55,7 +55,9 @@
                                         <div>
                                             {{-- <input type="checkbox" id="switch{{ $item->id }}" checked data-switch="success"/>
                                             <label for="switch{{ $item->id }}" data-on-label="Yes" data-off-label="No" class="mb-0 d-block"></label> --}}
+                                            @if ($item->role != 1)
                                             <a href="{{ route('user') }}/del/{{ $item->id }}" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

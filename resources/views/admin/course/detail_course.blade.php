@@ -50,26 +50,31 @@
             </div>
             <!-- end row -->
 
-            {{-- <div class="row">
+            <div class="row">
                 <div class="col-md-12 col-lg-12">
                     <table class="table table-striped table-centered mb-0">
                         <thead>
                             <tr>
-                                <th>User</th>
-                                <th>Account No.</th>
-                                <th>Balance</th>
+                                <th>Student</th>
+                                <th>username</th>
+                                <th>Status</th>
+                                <th>Khóa học</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($course->students() as $item)
+                            @foreach ($student as $item)
                             <tr>
                                 <td class="table-user">
-                                    <img src="/admin/images/users/avatar-2.jpg" alt="table-user" class="mr-2 rounded-circle" />
-                                    Risa D. Pearson
+                                    <img src="@if ($item->student->avatar_url)
+                                        {!!asset($item->student->avatar_url)!!}
+                                    @else/admin/images/users/avatar-2.jpg
+                                    @endif" alt="avatar" alt="table-user" class="mr-2 rounded-circle" />
+                                    {{ $item->student->name }}
                                 </td>
-                                <td>AC336 508 2157</td>
-                                <td>July 24, 1950</td>
+                                <td>{{ $item->student->username }}</td>
+                                <td>@if ($item->progress != 0) đã học @else chưa học @endif</td>
+                                <td>{{ $course[0]->name }}</td>
                                 <td class="table-action">
                                     <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
                                 </td>
@@ -79,7 +84,7 @@
                     </table>
                 </div>
 
-                <nav class="justify-content-center">
+                {{-- <nav class="justify-content-center">
                     <ul class="pagination pagination-rounded justify-content-center mb-0">
                         <li class="page-item">
                             <a class="page-link" href="javascript: void(0);" aria-label="Previous">
