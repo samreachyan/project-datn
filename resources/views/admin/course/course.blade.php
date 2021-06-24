@@ -70,8 +70,8 @@
             <div class="row">
                 @foreach ($courses as $item)
                 <div class="col-md-6 col-lg-3">
-                    <div class="card" style="width: 380px; height: 340px;">
-                        <img src={{ asset($item->thumbnail_url) }} style="width: 100%; height: 220px;" class="card-img-top" alt="...">
+                    <div class="card">
+                        <img src={{ asset($item->thumbnail_url) }} style="width: 100%; height: 150px;" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">{{ $item->name }}</h5>
                             <a href="/admin/course/detail/{{ $item->id }}" class="btn btn-primary mt-2 stretched-link">View details</a>
