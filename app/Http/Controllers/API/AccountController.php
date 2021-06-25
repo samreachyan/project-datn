@@ -11,6 +11,7 @@ use App\Models\Account;
 use App\Models\Instructor;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -39,18 +40,18 @@ class AccountController extends Controller
     public function store(Request $request)
     {
         $rules = array(
-            'username'=>'required|string|min:2|unique:accounts',
-            'fullname'=>'required|string|min:2|',
-            'email'=>'required|email|unique:accounts',
-            'password'=>'required|string|min:6'
+            'username' => 'required|string|min:2|unique:accounts',
+            'fullname' => 'required|string|min:2|',
+            'email' => 'required|email|unique:accounts',
+            'password' => 'required|string|min:6'
         );
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             $msg = $validator->errors();
-            return [ 'msg' => $msg, 'data' => null ];
+            return ['msg' => $msg, 'data' => null];
         } else {
-            $confirmation_code = time().uniqid(true);
+            $confirmation_code = time() . uniqid(true);
             $account = new Account;
             $account->name = $request->fullname;
             $account->username = $request->username;
@@ -85,21 +86,22 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getVerifyCode(Request $request) {
+    public function getVerifyCode(Request $request)
+    {
         $rules = array(
-            'email'=>'required|email'
+            'email' => 'required|email'
         );
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             $msg = $validator->errors();
-            return [ 'msg' => $msg, 'data' => null ];
+            return ['msg' => $msg, 'data' => null];
         } else {
             $account = Account::where('email', $request->email)->first();
 
             if ($account == null) {
                 return [
-                    'msg' => 'The account isn\'t registered yet' ,
+                    'msg' => 'The account isn\'t registered yet',
                     'data' => null
                 ];
             }
@@ -124,15 +126,16 @@ class AccountController extends Controller
         }
     }
 
-     /**
+    /**
      * Display the specified resource.
      *
      * @param  string email, confirmation_code
      * @return \Illuminate\Http\Response
      */
-    public function checkVerifyCode(Request $request) {
+    public function checkVerifyCode(Request $request)
+    {
         $rules = array(
-            'email'=>'required|email',
+            'email' => 'required|email',
             'confirmation_code' => 'required|string'
         );
         $validator = Validator::make($request->all(), $rules);
@@ -177,7 +180,7 @@ class AccountController extends Controller
     public function login(Request $request)
     {
         $rules = array(
-            'email'=>'required|email',
+            'email' => 'required|email',
             'password' => 'required|string'
         );
         $validator = Validator::make($request->all(), $rules);
@@ -233,7 +236,8 @@ class AccountController extends Controller
      * @param  file $image
      * @return \Illuminate\Http\Response
      */
-    public function signupInfoAfterSignup(Request $request) {
+    public function signupInfoAfterSignup(Request $request)
+    {
         $rules = array(
             'image' => 'required|mimes:jpeg,png,jpg|mimetypes:image/jpeg,image/png, image/jpg|max:2048',
         );
@@ -252,19 +256,19 @@ class AccountController extends Controller
 
             // checking file image
             $image = $request->file('image');
-            $fileName = $user->username .'-avatar-200x200'. '.' . $image->getClientOriginalExtension();
+            $fileName = $user->username . '-avatar-200x200' . '.' . $image->getClientOriginalExtension();
 
             $avatar = Image::make($image->getRealPath());
             $avatar->resize(200, 200, function ($constraint) {
                 $constraint->aspectRatio();
             });
             $avatar->stream();
-            if (Storage::exists('public/images/avatars'.'/'.$fileName)) {
-                Storage::delete('public/images/avatars'.'/'.$fileName);
+            if (Storage::exists('public/images/avatars' . '/' . $fileName)) {
+                Storage::delete('public/images/avatars' . '/' . $fileName);
             }
-            Storage::disk('local')->put('public/images/avatars'.'/'.$fileName, $avatar, 'public');
+            Storage::disk('local')->put('public/images/avatars' . '/' . $fileName, $avatar, 'public');
 
-            $user->avatar_url = Storage::url('public/images/avatars'.'/'.$fileName);
+            $user->avatar_url = Storage::url('public/images/avatars' . '/' . $fileName);
             $user->save();
 
             return [
@@ -272,13 +276,13 @@ class AccountController extends Controller
                 "data" => new UserResource($user)
             ];
         }
-
     }
 
-    public function changePassword(Request $request) {
+    public function changePassword(Request $request)
+    {
         $rules = array(
-            'password'=>'required|string|min:6',
-            'new_password'=>'required|string|min:6'
+            'password' => 'required|string|min:6',
+            'new_password' => 'required|string|min:6'
         );
         $validator = Validator::make($request->all(), $rules);
 
@@ -318,22 +322,23 @@ class AccountController extends Controller
         }
     }
 
-    public function forgotPassword(Request $request) {
+    public function forgotPassword(Request $request)
+    {
         $rules = array(
-            'email'=>'required|email'
+            'email' => 'required|email'
         );
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             $msg = $validator->errors();
-            return [ 'msg' => $msg, 'data' => null ];
+            return ['msg' => $msg, 'data' => null];
         } else {
-            $confirmation_code = time().uniqid(true);
+            $confirmation_code = time() . uniqid(true);
             $account = Account::where('email', $request->email)->first();
 
             if ($account == null) {
                 return [
-                    'msg' => 'The account isn\'t registered yet' ,
+                    'msg' => 'The account isn\'t registered yet',
                     'data' => null
                 ];
             }
@@ -360,7 +365,8 @@ class AccountController extends Controller
             }
         }
     }
-    public function resetPassword(Request $request) {
+    public function resetPassword(Request $request)
+    {
         $rules = array(
             'confirmation_code' => 'required|string',
             'password' => 'required|string|min:6'
@@ -369,7 +375,7 @@ class AccountController extends Controller
 
         if ($validator->fails()) {
             $msg = $validator->errors();
-            return [ 'msg' => $msg, 'data' => null ];
+            return ['msg' => $msg, 'data' => null];
         } else {
             // find user by confirmation code
             $user = Account::where('confirmation_code', $request->confirmation_code)->first();
@@ -393,10 +399,11 @@ class AccountController extends Controller
     }
 
     /**
-        * view profile instructor
+     * view profile instructor
 
-    **/
-    public function instructorProfile(Request $request) {
+     **/
+    public function instructorProfile(Request $request)
+    {
         $rules = array(
             'id' => 'required|string',
         );
@@ -404,7 +411,7 @@ class AccountController extends Controller
 
         if ($validator->fails()) {
             $msg = $validator->errors();
-            return [ 'msg' => $msg, 'data' => null ];
+            return ['msg' => $msg, 'data' => null];
         } else {
             $instructor = Instructor::where('account_id', $request->id)->first();
 
@@ -424,7 +431,8 @@ class AccountController extends Controller
     /**
      * student follow instructor by token
      */
-    public function followInstructor(Request $request) {
+    public function followInstructor(Request $request)
+    {
         $rules = array(
             'id_instructor' => 'required|string',
             'id_student' => 'required|string'
@@ -433,12 +441,23 @@ class AccountController extends Controller
 
         if ($validator->fails()) {
             $msg = $validator->errors();
-            return [ 'msg' => $msg, 'data' => null ];
+            return ['msg' => $msg, 'data' => null];
         } else {
-
+            $follow = DB::select('select * from follows where instructor_id = ? and student_id = ?', [$request->id_instructor, $request->id_student]);
+            // check has followed
+            if (isset($follow[0]->id)) {
+                return [
+                    'msg' => 'You already followed this instructor',
+                    'data' => null
+                ];
+            }
+            $student = Student::find($request->id_student)->follow($request->id_instructor);
             return [
-                'msg' => 'followed instructor',
-                'data' => null
+                'msg' => 'followed instructor successfully',
+                'data' => [
+                    'id_instructor' => $request->id_instructor,
+                    'id_student' => "$student->account_id"
+                ]
             ];
         }
     }
@@ -446,7 +465,8 @@ class AccountController extends Controller
     /**
      * unfollow any instructor by id
      */
-    public function unfollowInstructor(Request $request) {
+    public function unfollowInstructor(Request $request)
+    {
         $rules = array(
             'id_instructor' => 'required|string',
             'id_student' => 'required|string'
@@ -455,12 +475,25 @@ class AccountController extends Controller
 
         if ($validator->fails()) {
             $msg = $validator->errors();
-            return [ 'msg' => $msg, 'data' => null ];
+            return ['msg' => $msg, 'data' => null];
         } else {
-
+            //check follow or not
+            $follow = DB::select('select * from follows where instructor_id = ? and student_id = ?', [$request->id_instructor, $request->id_student]);
+            // check has not followed
+            if (!isset($follow[0]->id)) {
+                return [
+                    'msg' => 'You are not follow this instructor',
+                    'data' => null
+                ];
+            }
+            // unfollow this teacher
+            $student = Student::find($request->id_student)->unfollow($request->id_instructor);
             return [
-                'msg' => 'unfollowed instructor',
-                'data' => null
+                'msg' => 'unfollowed instructor successfully',
+                'data' => [
+                    'id_instructor' => $request->id_instructor,
+                    'id_student' => "$student->account_id"
+                ]
             ];
         }
     }
