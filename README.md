@@ -102,6 +102,27 @@ php artisan storage:link
 ## Report documents
 I add some important documents for you to learn and research this project work including Final report, slide, template, usecases image (astah file). Checkout: Report_documents.zip
 
+## Preview project
+- Home Page
+![Web](https://user-images.githubusercontent.com/32268364/125422632-ce147cea-e664-4829-8454-441607c5374f.png)
+
+- Course Screen
+![ViewCourse1](https://user-images.githubusercontent.com/32268364/125422726-7a774e7d-14bc-427d-8236-c5b8f9983f68.png)
+
+- Teacher Screen
+![Teacher1](https://user-images.githubusercontent.com/32268364/125422773-29f618c9-e0f2-43c2-a18c-d09f3aa6cb39.png)
+
+- Student Screen
+![NewNotification](https://user-images.githubusercontent.com/32268364/125422827-b94dc992-4000-4fa9-bd32-1727aad629e3.png)
+
+- Admin Screen
+![adminKhoaHoc](https://user-images.githubusercontent.com/32268364/125422884-8c758851-e0e1-4c63-b759-6b6f5e376336.png)
+![adminKhoaHocDetail](https://user-images.githubusercontent.com/32268364/125422906-bbfd3e6d-f893-4175-a282-5a9b82946fef.png)
+
+- API 
+![API Login](https://user-images.githubusercontent.com/32268364/125422950-8e42fc76-a94c-45f8-b9eb-a81222aeedb8.png)
+
+
 ## LICENSES
 
 - Licenses for Open Source Development
