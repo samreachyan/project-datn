@@ -5,7 +5,7 @@
 - **Laravel 8**
 - XAMPP (Recommandation)
 - If you're on Ubuntu, require (MySql Server, Apache2, Composer 2, install library `vendor` of laravel `compose install`)
-- **Internet**: dùng cho dịch vụ reCaptcha v3 và Drive Của Google. Using reCaptcha v3 and Google API. If it's slow or error something, let's check on  `app\Http\Controllers\Application\AccountController.php` link `151` change `$disableCaptcha = true` to disable this feature (**reCaptcha**).
+- **Internet**: Using reCaptcha v3 and Google API. If it's slow or error something, let's check on  `app\Http\Controllers\Application\AccountController.php` link `151` change `$disableCaptcha = true` to disable this feature (**reCaptcha**).
 
 ## Setup environment for laravel on `.env`
 
@@ -30,13 +30,13 @@
 
         FACEBOOK_APP_ID=....
         FACEBOOK_APP_SECRET=...
-        FACEBOOK_APP_CALLBACK_URL=http://vinacourse.com:8000/callback/facebook
+        FACEBOOK_APP_CALLBACK_URL=http://localhost:8000/callback/facebook
 
 
        - Google
 
-        GOOGLE_APP_ID=1024311172558-7leink819rgrqhnie3af96v39aum4n8e.apps.googleusercontent.com
-        GOOGLE_APP_SECRET=zj4UowfHrki1hWn5PWgTh1hR
+        GOOGLE_APP_ID=...
+        GOOGLE_APP_SECRET=...
         GOOGLE_APP_CALLBACK_URL=http://127.0.0.1:8000/callback/google
 
        - Github
@@ -48,12 +48,11 @@
        - Google Drive Setup
   
         FILESYSTEM_CLOUD=google
-        GOOGLE_DRIVE_CLIENT_ID=781710882056-u94tvuhd3pd2i7sk5hucj4fj5cg9q01q.apps.googleusercontent.com
-        GOOGLE_DRIVE_CLIENT_SECRET=e6uQZiDvRzXrgWc0l6gD-m2s
-        GOOGLE_DRIVE_REFRESH_TOKEN=1//0478Db2aog3x-CgYIARAAGAQSNwF-L9Ir7FuVkG1r5Cvh1zbWLBN3Rvg7GGh7-VYJt3UF_RQBbfhem399W_4T0zh4IK_JNCC2NZE
-        GOOGLE_DRIVE_FOLDER_ID=1L3MDJgwZzcSwxgCH7q2k-qZHVl8Su5VM
+        GOOGLE_DRIVE_CLIENT_ID=..
+        GOOGLE_DRIVE_CLIENT_SECRET=...
+        GOOGLE_DRIVE_REFRESH_TOKEN=...
+        GOOGLE_DRIVE_FOLDER_ID=..
 
-        
         
     - Google Drive API (Get Token of OAuth2.0) checkout this document: [Viblo](https://viblo.asia/p/thao-thac-voi-google-drive-api-gGJ59O4xZX2) or [Github](https://github.com/ivanvermeyen/laravel-google-drive-demo) read how to setup token and root folder on Google drive.
 ## **Server**
@@ -62,30 +61,33 @@
 
 -   Start server
     ```console
-    ~$ php artisan serve
+    php artisan serve
     ```
 
 ## **Initial Command**
 
 - Install all package (download libraries):
 ```console
-    ~$ composer update
+composer update
 ```
 - Migrate database:
 ```console
-    ~$ php artisan migrate
+php artisan migrate
 ```
 - Seed database:
 ```console
-    ~$ php artisan db:seed
+php artisan db:seed
 ```
-    Auto create 3 accounts username and password :
-        - username: admin , password: admin
-        - username: teacher , password: teacher
-        - usernmae: student , password: student
+
+- Auto create 3 accounts username and password:
+```
+    - username: admin , password: admin
+    - username: teacher , password: teacher
+    - usernmae: student , password: student
+```
 - Start queue service for windows on XAMPP if you're ubuntu don't need:
 ```console
-    ~$ php artisan queue:work
+php artisan queue:work
 ```
 ---
 **Note**
@@ -94,7 +96,7 @@
 ---
 - Link public storage to public folder (Mean if you clone project doesn't link public folder yet). So you must link this first.
 ```console
-    ~$ php artisan storage:link
+php artisan storage:link
 ```
 
 ## Report documents
